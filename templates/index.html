@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Lobby">
+  <title>Lobby</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-900 min-h-screen">
+  <div class="max-w-3xl mx-auto px-6 py-10">
+    <div class="flex items-center justify-between mb-8">
+      <h1 class="text-slate-100 text-2xl font-semibold">Lobby</h1>
+      <a href="/logout" class="text-slate-400 hover:text-slate-200 text-sm">Logout</a>
+    </div>
+    <div class="grid grid-cols-3 sm:grid-cols-4 gap-4">
+      {% for app in apps %}
+      <a href="{{ app.url }}"
+         class="flex flex-col items-center gap-2 p-4 rounded-2xl bg-slate-800 hover:bg-slate-700 transition">
+        <span class="text-4xl">{{ app.icon }}</span>
+        <span class="text-slate-200 text-sm text-center">{{ app.name }}</span>
+      </a>
+      {% endfor %}
+    </div>
+  </div>
+</body>
+</html>
