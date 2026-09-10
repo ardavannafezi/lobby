@@ -1,6 +1,6 @@
 [
   { "id": "infra", "name": "Infra", "url": "https://infra.ardavan.me", "icon": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/dokploy.svg" },
-  { "id": "fw", "name": "Firewall", "url": "https://fw.ardavan.me", "icon": "🛡️" },
+  { "id": "fw", "name": "Firewall", "url": "http://fw.ardavan.me:8080", "icon": "🛡️" },
   { "id": "kaneo", "name": "Kaneo", "url": "https://kaneo.ardavan.me", "icon": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/kaneo.svg" },
   { "id": "plane", "name": "Plane", "url": "https://plane.ardavan.me", "icon": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/plane.svg" },
   { "id": "securo", "name": "Securo", "url": "https://securo.ardavan.me", "icon": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/securo.svg" },
