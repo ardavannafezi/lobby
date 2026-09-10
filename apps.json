@@ -1,8 +1,8 @@
 [
-  { "name": "Infra", "url": "https://infra.ardavan.me", "icon": "🏗️" },
-  { "name": "Firewall", "url": "https://fw.ardavan.me", "icon": "🛡️" },
-  { "name": "Kaneo", "url": "https://kaneo.ardavan.me", "icon": "📋" },
-  { "name": "Plane", "url": "https://plane.ardavan.me", "icon": "✈️" },
-  { "name": "Securo", "url": "https://securo.ardavan.me", "icon": "💰" },
-  { "name": "Anytype", "url": "https://anytype.ardavan.me", "icon": "📝" }
+  { "id": "infra", "name": "Infra", "url": "https://infra.ardavan.me", "icon": "🏗️" },
+  { "id": "fw", "name": "Firewall", "url": "https://fw.ardavan.me", "icon": "🛡️" },
+  { "id": "kaneo", "name": "Kaneo", "url": "https://kaneo.ardavan.me", "icon": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/kaneo.svg" },
+  { "id": "plane", "name": "Plane", "url": "https://plane.ardavan.me", "icon": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/plane.svg" },
+  { "id": "securo", "name": "Securo", "url": "https://securo.ardavan.me", "icon": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/securo.svg" },
+  { "id": "anytype", "name": "Anytype", "url": "https://anytype.ardavan.me", "icon": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/anytype.svg" }
 ]

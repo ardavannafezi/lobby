@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Lobby — Manage</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-black min-h-screen">
+  <div class="max-w-2xl mx-auto px-6 py-10">
+    <div class="flex items-center justify-between mb-8">
+      <h1 class="text-zinc-100 text-2xl font-mono font-semibold tracking-tight">manage</h1>
+      <a href="/" class="text-zinc-400 hover:text-amber-400 text-sm">Back</a>
+    </div>
+
+    <div class="space-y-3 mb-10">
+      {% for app in apps %}
+      <details class="bg-zinc-900 border border-zinc-800 rounded-xl px-4 py-3">
+        <summary class="flex items-center gap-3 cursor-pointer list-none">
+          {% if app.icon.startswith('http') %}
+            <img src="{{ app.icon }}" class="w-6 h-6 object-contain">
+          {% else %}
+            <span class="text-xl">{{ app.icon }}</span>
+          {% endif %}
+          <span class="text-zinc-200 flex-1">{{ app.name }}</span>
+          <span class="text-zinc-500 text-xs">{{ app.url }}</span>
+        </summary>
+        <form method="post" action="/manage/edit/{{ app.id }}" class="icon-picker-form mt-4 space-y-2">
+          <input name="name" value="{{ app.name }}" placeholder="Name"
+                 class="w-full rounded-lg bg-zinc-800 text-zinc-100 placeholder-zinc-500 px-3 py-2 outline-none focus:ring-2 focus:ring-amber-500">
+          <input name="url" value="{{ app.url }}" placeholder="https://..."
+                 class="w-full rounded-lg bg-zinc-800 text-zinc-100 placeholder-zinc-500 px-3 py-2 outline-none focus:ring-2 focus:ring-amber-500">
+          <div class="relative">
+            <div class="flex items-center gap-2">
+              <img class="icon-preview w-6 h-6 object-contain" src="{{ app.icon if app.icon.startswith('http') else '' }}">
+              <input name="icon" value="{{ app.icon }}" placeholder="Emoji or search an icon below"
+                     class="icon-value w-full rounded-lg bg-zinc-800 text-zinc-100 placeholder-zinc-500 px-3 py-2 outline-none focus:ring-2 focus:ring-amber-500">
+            </div>
+            <input type="text" placeholder="Search selfh.st icons..."
+                   class="icon-search w-full mt-2 rounded-lg bg-zinc-800 text-zinc-100 placeholder-zinc-500 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-amber-500">
+            <div class="icon-results absolute z-10 mt-1 w-full bg-zinc-800 border border-zinc-700 rounded-lg max-h-48 overflow-y-auto hidden"></div>
+          </div>
+          <div class="flex gap-2 pt-1">
+            <button type="submit" class="rounded-lg bg-amber-500 text-black px-4 py-1.5 text-sm font-medium hover:bg-amber-400">Save</button>
+            <button type="submit" formaction="/manage/delete/{{ app.id }}" class="rounded-lg bg-zinc-800 text-red-400 px-4 py-1.5 text-sm hover:bg-zinc-700">Delete</button>
+          </div>
+        </form>
+      </details>
+      {% endfor %}
+    </div>
+
+    <h2 class="text-zinc-400 text-sm uppercase tracking-wide mb-3">Add app</h2>
+    <form method="post" action="/manage/add" class="icon-picker-form bg-zinc-900 border border-zinc-800 rounded-xl p-4 space-y-2">
+      <input name="name" placeholder="Name" required
+             class="w-full rounded-lg bg-zinc-800 text-zinc-100 placeholder-zinc-500 px-3 py-2 outline-none focus:ring-2 focus:ring-amber-500">
+      <input name="url" placeholder="https://..." required
+             class="w-full rounded-lg bg-zinc-800 text-zinc-100 placeholder-zinc-500 px-3 py-2 outline-none focus:ring-2 focus:ring-amber-500">
+      <div class="relative">
+        <div class="flex items-center gap-2">
+          <img class="icon-preview w-6 h-6 object-contain" src="">
+          <input name="icon" placeholder="Emoji or search an icon below" required
+                 class="icon-value w-full rounded-lg bg-zinc-800 text-zinc-100 placeholder-zinc-500 px-3 py-2 outline-none focus:ring-2 focus:ring-amber-500">
+        </div>
+        <input type="text" placeholder="Search selfh.st icons..."
+               class="icon-search w-full mt-2 rounded-lg bg-zinc-800 text-zinc-100 placeholder-zinc-500 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-amber-500">
+        <div class="icon-results absolute z-10 mt-1 w-full bg-zinc-800 border border-zinc-700 rounded-lg max-h-48 overflow-y-auto hidden"></div>
+      </div>
+      <button type="submit" class="rounded-lg bg-amber-500 text-black px-4 py-1.5 text-sm font-medium hover:bg-amber-400">Add</button>
+    </form>
+  </div>
+
+  <script>
+    const ICONS_URL = "https://cdn.jsdelivr.net/gh/selfhst/icons@main/index.json";
+    const SVG_BASE = "https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/";
+    let iconIndex = null;
+
+    async function getIcons() {
+      if (!iconIndex) {
+        const res = await fetch(ICONS_URL);
+        iconIndex = await res.json();
+      }
+      return iconIndex;
+    }
+
+    document.querySelectorAll(".icon-picker-form").forEach((form) => {
+      const search = form.querySelector(".icon-search");
+      const results = form.querySelector(".icon-results");
+      const valueInput = form.querySelector(".icon-value");
+      const preview = form.querySelector(".icon-preview");
+
+      search.addEventListener("input", async () => {
+        const q = search.value.trim().toLowerCase();
+        if (!q) { results.classList.add("hidden"); return; }
+        const icons = await getIcons();
+        const matches = icons.filter(i => i.Name.toLowerCase().includes(q)).slice(0, 8);
+        results.innerHTML = "";
+        matches.forEach((i) => {
+          const url = SVG_BASE + i.Reference + ".svg";
+          const row = document.createElement("div");
+          row.className = "flex items-center gap-2 px-3 py-2 hover:bg-zinc-700 cursor-pointer text-sm text-zinc-200";
+          row.innerHTML = `<img src="${url}" class="w-5 h-5 object-contain"><span>${i.Name}</span>`;
+          row.addEventListener("click", () => {
+            valueInput.value = url;
+            preview.src = url;
+            results.classList.add("hidden");
+            search.value = "";
+          });
+          results.appendChild(row);
+        });
+        results.classList.toggle("hidden", matches.length === 0);
+      });
+
+      valueInput.addEventListener("input", () => {
+        preview.src = valueInput.value.startsWith("http") ? valueInput.value : "";
+      });
+    });
+  </script>
+</body>
+</html>

@@ -13,15 +13,16 @@ one-tap dashboard.
      python -c "from werkzeug.security import generate_password_hash; print(generate_password_hash('yourpassword'))"
      ```
    - `SECRET_KEY` — generate with `openssl rand -hex 32`
-2. Edit `apps.json` with your own apps:
-   ```json
-   [{ "name": "My App", "url": "https://myapp.example.com", "icon": "🚀" }]
-   ```
-3. Run:
+2. Run:
    ```
    docker compose up -d
    ```
-4. Visit `http://localhost:8000`, log in, add to your phone's homescreen.
+3. Visit `http://localhost:8000`, log in, add to your phone's homescreen.
+4. Go to `/manage` to add, edit, or delete apps — search
+   [selfh.st/icons](https://selfh.st/icons/) right in the icon field, or type
+   any emoji or image URL. Apps are stored in the `lobby_data` volume, so
+   edits persist across redeploys (`apps.json` in the repo is only the seed
+   for a first run).
 
 ## Deploying
 

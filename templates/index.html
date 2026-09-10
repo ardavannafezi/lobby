@@ -8,18 +8,25 @@
   <title>Lobby</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-slate-900 min-h-screen">
+<body class="bg-black min-h-screen">
   <div class="max-w-3xl mx-auto px-6 py-10">
     <div class="flex items-center justify-between mb-8">
-      <h1 class="text-slate-100 text-2xl font-semibold">Lobby</h1>
-      <a href="/logout" class="text-slate-400 hover:text-slate-200 text-sm">Logout</a>
+      <h1 class="text-zinc-100 text-2xl font-mono font-semibold tracking-tight">lobby</h1>
+      <div class="flex items-center gap-4 text-sm">
+        <a href="/manage" class="text-zinc-400 hover:text-amber-400">Manage</a>
+        <a href="/logout" class="text-zinc-400 hover:text-amber-400">Logout</a>
+      </div>
     </div>
     <div class="grid grid-cols-3 sm:grid-cols-4 gap-4">
       {% for app in apps %}
       <a href="{{ app.url }}"
-         class="flex flex-col items-center gap-2 p-4 rounded-2xl bg-slate-800 hover:bg-slate-700 transition">
-        <span class="text-4xl">{{ app.icon }}</span>
-        <span class="text-slate-200 text-sm text-center">{{ app.name }}</span>
+         class="flex flex-col items-center gap-2 p-4 rounded-2xl bg-zinc-900 border border-zinc-800 hover:border-amber-500 transition">
+        {% if app.icon.startswith('http') %}
+          <img src="{{ app.icon }}" alt="" class="w-10 h-10 object-contain">
+        {% else %}
+          <span class="text-4xl">{{ app.icon }}</span>
+        {% endif %}
+        <span class="text-zinc-200 text-sm text-center">{{ app.name }}</span>
       </a>
       {% endfor %}
     </div>
