@@ -70,6 +70,27 @@
       </div>
       <button type="submit" class="rounded-lg bg-amber-500 text-black px-4 py-1.5 text-sm font-medium hover:bg-amber-400">Add</button>
     </form>
+
+    <h2 class="text-zinc-400 text-sm uppercase tracking-wide mb-3 mt-10">Users</h2>
+    <div class="space-y-2 mb-4">
+      {% for username in users %}
+      <div class="flex items-center justify-between bg-zinc-900 border border-zinc-800 rounded-xl px-4 py-3">
+        <span class="text-zinc-200">{{ username }}{% if username == current_user.id %} <span class="text-zinc-500 text-xs">(you)</span>{% endif %}</span>
+        {% if users|length > 1 %}
+        <form method="post" action="/manage/users/delete/{{ username }}">
+          <button type="submit" class="rounded-lg bg-zinc-800 text-red-400 px-3 py-1 text-sm hover:bg-zinc-700">Delete</button>
+        </form>
+        {% endif %}
+      </div>
+      {% endfor %}
+    </div>
+    <form method="post" action="/manage/users/add" class="bg-zinc-900 border border-zinc-800 rounded-xl p-4 space-y-2">
+      <input name="username" placeholder="Username" required
+             class="w-full rounded-lg bg-zinc-800 text-zinc-100 placeholder-zinc-500 px-3 py-2 outline-none focus:ring-2 focus:ring-amber-500">
+      <input name="password" type="password" placeholder="Password" required
+             class="w-full rounded-lg bg-zinc-800 text-zinc-100 placeholder-zinc-500 px-3 py-2 outline-none focus:ring-2 focus:ring-amber-500">
+      <button type="submit" class="rounded-lg bg-amber-500 text-black px-4 py-1.5 text-sm font-medium hover:bg-amber-400">Add user</button>
+    </form>
   </div>
 
   <script>

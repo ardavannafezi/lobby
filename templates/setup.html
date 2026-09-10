@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#000000">
+  <link rel="apple-touch-icon" href="/static/apple-touch-icon.png">
+  <link rel="icon" href="/static/icon-192.png">
+  <title>Lobby — Setup</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-black min-h-screen flex items-center justify-center">
+  <form method="post" action="/setup" class="bg-zinc-900 border border-zinc-800 p-8 rounded-2xl w-80 space-y-4">
+    <h1 class="text-zinc-100 text-xl font-mono font-semibold text-center tracking-tight">lobby</h1>
+    <p class="text-zinc-500 text-sm text-center">Create the first admin account</p>
+    {% if error %}
+      <p class="text-red-400 text-sm text-center">{{ error }}</p>
+    {% endif %}
+    <input name="username" placeholder="Username" autofocus
+           class="w-full rounded-lg bg-zinc-800 text-zinc-100 placeholder-zinc-500 px-3 py-2 outline-none focus:ring-2 focus:ring-amber-500">
+    <input name="password" type="password" placeholder="Password"
+           class="w-full rounded-lg bg-zinc-800 text-zinc-100 placeholder-zinc-500 px-3 py-2 outline-none focus:ring-2 focus:ring-amber-500">
+    <button type="submit"
+            class="w-full rounded-lg bg-amber-500 text-black py-2 font-medium hover:bg-amber-400">
+      Create account
+    </button>
+  </form>
+</body>
+</html>
